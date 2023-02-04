@@ -19,7 +19,10 @@ function setRandomColors(node) {
     const color = getRandomColor();
     const text = item.querySelector('.col__title');
     const lock = item.querySelector('.col__lock-icon');
+    const isLocked = lock.classList.contains('ri-lock-fill');
     
+    if(isLocked) return;
+
     text.textContent = color;
     item.style.backgroundColor = color;
   
@@ -38,7 +41,21 @@ setRandomColors(cols);
 
 // Change background color when we clicked 'Space' key
 document.addEventListener('keydown', (e) => {
+  e.preventDefault();
   if (e.code === 'Space') {
     setRandomColors(cols);
+  }
+});
+
+// Change icon of lock button through delegating event
+document.addEventListener('click', (e) => {
+  let target = e.target; 
+
+  if (target.closest('[data-type="lock"]')) {
+    const node = e.target.tagName.toLowerCase() === 'i' ? e.target : e.target.firstElementChild;
+    
+    node.classList.toggle('ri-lock-unlock-fill');
+    node.classList.toggle('ri-lock-fill');
+
   }
 });
