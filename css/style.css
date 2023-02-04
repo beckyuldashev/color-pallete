@@ -16,8 +16,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color: darkgoldenrod;
-  border: 1px solid;
 }
 
 .col__title {
