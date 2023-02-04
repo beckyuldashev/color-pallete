@@ -35,3 +35,10 @@ function setTextColor(node, color) {
 }
 
 setRandomColors(cols);
+
+// Change background color when we clicked 'Space' key
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    setRandomColors(cols);
+  }
+});
