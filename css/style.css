@@ -49,3 +49,18 @@ body {
   display: block;
   color:hsl(0, 0%, 100%);
 }
+
+.copy {
+  position: absolute;
+  top: -100%;
+  right: 1rem;
+  padding: 1rem;
+  background-color: #f1f1f1;
+  border-radius: 1rem;
+  transition: top .2s;
+  font-size: 1.125rem;
+}
+
+.copy.show {
+  top: 1rem;
+}

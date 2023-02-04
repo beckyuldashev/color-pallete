@@ -37,6 +37,10 @@ function setTextColor(node, color) {
   node.style.color = luminance > 0.5 ? 'black' : 'white';
 }
 
+function copyClipboard(text) {
+  return navigator.clipboard.writeText(text);
+}
+
 setRandomColors(cols);
 
 // Change background color when we clicked 'Space' key
@@ -56,6 +60,20 @@ document.addEventListener('click', (e) => {
     
     node.classList.toggle('ri-lock-unlock-fill');
     node.classList.toggle('ri-lock-fill');
+  }
+
+  if(target.dataset.type === 'copy') {
+    const copyNode = document.querySelector('.copy');
+
+    copyClipboard(target.textContent)
+      .then(() => {
+        copyNode.textContent = `Скопирован цвет: ${target.textContent}`;
+      })
+      .catch(e => {
+        copyNode.textContent = `Что-то пошло не так: ${e}`;
+      });
+  
+    copyNode.classList.add('show');
 
   }
 });
