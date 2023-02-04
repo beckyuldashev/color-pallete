@@ -14,21 +14,33 @@ function getRandomColor() {
   return `#${color}`;
 }
 
-function setRandomColors(node) {
-  node.forEach(item => {
-    const color = getRandomColor();
+function setRandomColors(node, isInitial) {
+  const colors = isInitial ? getColorsFromHash() : [];
+
+  node.forEach((item, index) => {
     const text = item.querySelector('.col__title');
     const lock = item.querySelector('.col__lock-icon');
     const isLocked = lock.classList.contains('ri-lock-fill');
     
-    if(isLocked) return;
+    if(isLocked) {
+      colors.push(text.textContent);
+      return;
+    };
+    
+    const color = isInitial ? colors[index] ? colors[index] : getRandomColor() : getRandomColor();
+
+    if(!isInitial) {
+      colors.push(color);
+    }
 
     text.textContent = color;
     item.style.backgroundColor = color;
-  
+    
     setTextColor(text, color);
     setTextColor(lock, color);
   });
+
+  setColorHash(colors);
 }
 
 function setTextColor(node, color) {
@@ -41,7 +53,17 @@ function copyClipboard(text) {
   return navigator.clipboard.writeText(text);
 }
 
-setRandomColors(cols);
+function setColorHash(colors = []) {
+  document.location.hash = colors.map(item => item.toString().substring(1)).join('-');
+}
+
+function getColorsFromHash() {
+  if(document.location.hash.length > 1) {
+    return document.location.hash.substring(1).split('-').map(item => '#' + item);
+  }
+  return [];
+}
+
 
 // Change background color when we clicked 'Space' key
 document.addEventListener('keydown', (e) => {
@@ -77,3 +99,6 @@ document.addEventListener('click', (e) => {
 
   }
 });
+
+
+setRandomColors(cols, true);
