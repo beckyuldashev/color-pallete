@@ -16,8 +16,22 @@ function getRandomColor() {
 
 function setRandomColors(node) {
   node.forEach(item => {
-    item.style.backgroundColor = getRandomColor();
+    const color = getRandomColor();
+    const text = item.querySelector('.col__title');
+    const lock = item.querySelector('.col__lock-icon');
+    
+    text.textContent = color;
+    item.style.backgroundColor = color;
+  
+    setTextColor(text, color);
+    setTextColor(lock, color);
   });
+}
+
+function setTextColor(node, color) {
+  const luminance = chroma(color).luminance();
+
+  node.style.color = luminance > 0.5 ? 'black' : 'white';
 }
 
 setRandomColors(cols);
